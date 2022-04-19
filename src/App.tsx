@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 type Users = {
@@ -30,16 +30,20 @@ const baseUrl: string = 'https://jsonplaceholder.typicode.com/users'
 function App() {
   const [users, setUsers] = useState<Users>([]);
 
-  console.log(users)
-
-  useEffect(() => {
+  const addUser = () => {
     axios.get(baseUrl).then((res) => {
       setUsers(res.data);
     });
-  }, []);
+  }
+
+  const resetUser = () => {
+    setUsers([])
+  }
 
   return (
     <div className="App">
+      <button onClick={addUser}>ユーザー取得</button>
+      <button onClick={resetUser}>リセット</button>
       <ul>
         {users.map((user) => (
           <li>
